@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="de" xmlns:th="http://www.thymeleaf.org"><head th:fragment="head(title)">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title th:text="${title} + ' | Ghost Net Fishing'">Ghost Net Fishing</title><link rel="stylesheet" th:href="@{/style.css}">
+</head><body><header th:fragment="header"><a class="brand" th:href="@{/}">GHOST NET <span>FISHING</span></a><nav aria-label="Hauptnavigation"><a th:href="@{/}">Alle Netze</a><a th:href="@{/(open=true)}">Offene Bergungen</a><a class="button" th:href="@{/nets/new}">+ Netz melden</a></nav></header>
+<footer th:fragment="footer">Ghost Net Fishing · Studienprototyp · Nur fiktive Kontaktdaten für Tests verwenden.</footer>
+</body></html>

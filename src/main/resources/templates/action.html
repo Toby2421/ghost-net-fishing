@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="de" xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head(${title})}"></head><body>
+<header th:replace="~{fragments :: header}"></header><main class="narrow"><p class="eyebrow" th:text="'NETZ GN-' + ${net.id}"></p><h1 th:text="${title}"></h1>
+<p th:text="'Position: ' + ${net.latitude} + ', ' + ${net.longitude} + ' · Fläche: ' + ${net.sizeSquareMeters} + ' m²'"></p>
+<form class="card" th:action="@{/nets/{id}/{action}(id=${net.id},action=${action})}" th:object="${contactForm}" method="post">
+<p th:if="${action == 'reserve'}">Mit deiner Eintragung übernimmst du die geplante Bergung dieses Netzes.</p>
+<p th:if="${action == 'recover'}">Bestätige die erfolgreiche Bergung mit den gleichen Kontaktangaben wie bei der Übernahme.</p>
+<p th:if="${action == 'missing'}">Melde das Netz nur als verschollen, wenn es am angegebenen Standort nicht auffindbar ist. Diese Meldung ist nicht anonym möglich.</p>
+<div class="error" role="alert" th:if="${#fields.hasAnyErrors()}"><ul><li th:each="err : ${#fields.allErrors()}" th:text="${err}"></li></ul></div>
+<label for="name">Name *</label><input id="name" required maxlength="100" th:field="*{name}" autocomplete="name">
+<label for="phone">Telefonnummer *</label><input id="phone" type="tel" required maxlength="40" th:field="*{phone}" autocomplete="tel">
+<div class="form-actions"><button type="submit" th:text="${title}"></button><a th:href="@{/}">Abbrechen</a></div>
+</form></main><footer th:replace="~{fragments :: footer}"></footer></body></html>

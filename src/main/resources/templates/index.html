@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="de" xmlns:th="http://www.thymeleaf.org"><head th:replace="~{fragments :: head('Netzübersicht')}"></head><body>
+<header th:replace="~{fragments :: header}"></header><main>
+<section class="intro"><p class="eyebrow">MELDEN. KOORDINIEREN. BERGEN.</p><h1 th:text="${openOnly ? 'Offene Bergungen' : 'Gemeinsam gegen Geisternetze'}"></h1><p>Fundorte erfassen, eine Bergung übernehmen und Fortschritte nachvollziehen.</p></section>
+<p class="success" role="status" th:if="${success}" th:text="${success}"></p><p class="error" role="alert" th:if="${error}" th:text="${error}"></p>
+<section class="card"><div class="section-heading"><h2 th:text="${openOnly ? 'Noch zu bergende Netze' : 'Gemeldete Netze'}"></h2><span th:text="${#lists.size(nets)} + ' Einträge'"></span></div>
+<p class="empty" th:if="${#lists.isEmpty(nets)}">Hier gibt es noch keine Einträge. Über „Netz melden“ kannst du einen Fund erfassen.</p>
+<div class="table-wrap" th:unless="${#lists.isEmpty(nets)}"><table><thead><tr><th>Netz</th><th>GPS-Position</th><th>Fläche</th><th>Status</th><th>Aktionen</th></tr></thead><tbody>
+<tr th:each="net : ${nets}"><td th:text="'GN-' + ${net.id}"></td><td><span th:text="${net.latitude}"></span><br><span th:text="${net.longitude}"></span></td><td th:text="${net.sizeSquareMeters} + ' m²'"></td>
+<td><span class="badge" th:classappend="${net.status.name()}" th:text="${net.status.label}"></span></td>
+<td class="actions"><a th:if="${net.status.name() == 'REPORTED'}" th:href="@{/nets/{id}/reserve(id=${net.id})}">Bergung übernehmen</a><a th:if="${net.status.name() == 'RECOVERY_PLANNED'}" th:href="@{/nets/{id}/recover(id=${net.id})}">Geborgen melden</a><a th:if="${net.status.open}" th:href="@{/nets/{id}/missing(id=${net.id})}">Verschollen melden</a><span th:unless="${net.status.open}">Abgeschlossen</span></td></tr>
+</tbody></table></div></section><p class="hint" th:if="${openOnly}">Angezeigt werden gemeldete Netze und Netze mit bevorstehender Bergung.</p>
+</main><footer th:replace="~{fragments :: footer}"></footer></body></html>
